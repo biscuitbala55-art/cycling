@@ -1,0 +1,324 @@
+/* =========================================================
+   Cit-E Cycling Web Portal — custom theme
+   Layered on top of Bootstrap 5. Visual only — no IDs,
+   names, or structural hooks used by PHP/JS are touched.
+   ========================================================= */
+
+:root {
+  --asphalt: #14171a;
+  --asphalt-light: #1f242b;
+  --lime: #d7ff3f;
+  --lime-dark: #aacf1f;
+  --steel: #3a6ea5;
+  --off-white: #f6f5f1;
+  --line: #e4e2db;
+  --ink: #14171a;
+  --muted: #6b7280;
+  --danger: #e4572e;
+  --radius: 10px;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap');
+
+body {
+  background-color: var(--off-white);
+  color: var(--ink);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+h1, h2, h3, h4, .display-font {
+  font-family: 'Oswald', sans-serif;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--asphalt);
+}
+
+a {
+  color: var(--steel);
+}
+a:hover {
+  color: var(--asphalt);
+}
+
+/* ---------- Top nav / brand bar ---------- */
+.cec-navbar {
+  background: var(--asphalt);
+  border-bottom: 4px solid var(--lime);
+}
+.cec-navbar .navbar-brand {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--lime) !important;
+  font-size: 1.3rem;
+}
+.cec-navbar .navbar-brand .bi {
+  margin-right: 0.4rem;
+}
+
+/* ---------- Page shell ---------- */
+.cec-shell {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 2rem 1rem 4rem;
+}
+
+.cec-backlink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--muted);
+  margin-bottom: 1.25rem;
+}
+.cec-backlink:hover { color: var(--steel); }
+
+/* ---------- Hero (index) ---------- */
+.cec-hero {
+  background: linear-gradient(135deg, var(--asphalt) 0%, #20262d 100%);
+  border-radius: var(--radius);
+  padding: 3rem 2rem;
+  color: var(--off-white);
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+.cec-hero::after {
+  content: "";
+  position: absolute;
+  right: -40px;
+  top: -40px;
+  width: 220px;
+  height: 220px;
+  background: var(--lime);
+  opacity: 0.08;
+  border-radius: 50%;
+}
+.cec-hero h1 {
+  color: var(--off-white);
+  font-size: 2.4rem;
+  margin-bottom: 0.5rem;
+}
+.cec-hero p {
+  color: #c9ccd1;
+  max-width: 36rem;
+}
+
+/* ---------- Menu / action cards ---------- */
+.cec-card-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.25rem;
+  text-decoration: none;
+  color: var(--ink);
+  transition: border-color .15s ease, transform .15s ease, box-shadow .15s ease;
+}
+.cec-card-link:hover {
+  border-color: var(--lime-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(20,23,26,0.08);
+  color: var(--ink);
+}
+.cec-card-link .cec-icon {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  border-radius: 8px;
+  background: var(--asphalt);
+  color: var(--lime);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+.cec-card-link .cec-card-title {
+  font-weight: 600;
+  display: block;
+}
+.cec-card-link .cec-card-sub {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.cec-card-link.danger-hover:hover {
+  border-color: var(--danger);
+}
+
+/* ---------- Forms ---------- */
+.cec-form-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+}
+.cec-form-card label,
+.cec-form-card p {
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+  margin-bottom: 0.3rem;
+}
+.btn-cec {
+  background: var(--lime);
+  border: none;
+  color: var(--asphalt);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  border-radius: 6px;
+  padding: 0.55rem 1.5rem;
+}
+.btn-cec:hover {
+  background: var(--lime-dark);
+  color: var(--asphalt);
+}
+.btn-cec-outline {
+  border: 2px solid var(--asphalt);
+  color: var(--asphalt);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  border-radius: 6px;
+  background: transparent;
+}
+.btn-cec-outline:hover {
+  background: var(--asphalt);
+  color: var(--lime);
+}
+
+/* ---------- Signature element: roadside km-marker chip ----------
+   Used for IDs and numeric stats (power output / distance) to
+   echo the roadside distance markers riders pass on a route. */
+.km-marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  background: var(--lime);
+  color: var(--asphalt);
+  border: 2px solid var(--asphalt);
+  border-radius: 4px;
+  padding: 0.1rem 0.5rem;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+.km-marker.muted {
+  background: var(--off-white);
+  border-color: var(--line);
+  color: var(--asphalt);
+}
+
+/* ---------- Tables ---------- */
+.cec-table-wrap {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+table.cec-table {
+  margin-bottom: 0;
+}
+table.cec-table thead th {
+  background: var(--asphalt);
+  color: var(--lime);
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  border: none;
+  vertical-align: middle;
+}
+table.cec-table td {
+  vertical-align: middle;
+  font-size: 0.92rem;
+}
+table.cec-table tbody tr:hover {
+  background: #fbfbe9;
+}
+.btn-edit-pill, .btn-delete-pill {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  border-radius: 20px;
+  padding: 0.3rem 0.8rem;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.btn-edit-pill {
+  background: var(--steel);
+  color: #fff;
+}
+.btn-edit-pill:hover { background: #2c5680; color: #fff; }
+.btn-delete-pill {
+  background: #fdeae3;
+  color: var(--danger);
+  border: 1px solid var(--danger);
+}
+.btn-delete-pill:hover { background: var(--danger); color: #fff; }
+
+/* ---------- Result / stat blocks ---------- */
+.cec-result-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--lime-dark);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  margin-bottom: 0.85rem;
+}
+.cec-result-card .name {
+  font-weight: 600;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.cec-stats-banner {
+  background: var(--asphalt);
+  color: var(--off-white);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  margin-top: 1.5rem;
+}
+.cec-stats-banner .stat-label {
+  color: #9aa0a6;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.cec-stats-banner .stat-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--lime);
+}
+
+/* ---------- Alerts (kept generic so PHP "echo" output styles too) -- */
+ul[style*="color:red"], ul[style*="color: red"] {
+  list-style: none;
+  background: #fdeae3;
+  border: 1px solid var(--danger);
+  color: var(--danger) !important;
+  border-radius: var(--radius);
+  padding: 0.9rem 1.1rem;
+  font-weight: 500;
+}
+ul[style*="color:red"] li, ul[style*="color: red"] li {
+  margin-bottom: 0.2rem;
+}
+
+footer.cec-footer {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.8rem;
+  padding: 2rem 0 1rem;
+}
