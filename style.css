@@ -24,7 +24,10 @@ body {
   background-color: var(--off-white);
   color: var(--ink);
   font-family: 'Inter', system-ui, sans-serif;
+  padding-bottom: 90px;
+  padding-top: 70px;
 }
+
 
 h1, h2, h3, h4, .display-font {
   font-family: 'Oswald', sans-serif;
@@ -44,6 +47,11 @@ a:hover {
 .cec-navbar {
   background: var(--asphalt);
   border-bottom: 4px solid var(--lime);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
 }
 .cec-navbar .navbar-brand {
   font-family: 'Oswald', sans-serif;
@@ -77,7 +85,9 @@ a:hover {
 
 /* ---------- Hero (index) ---------- */
 .cec-hero {
-  background: linear-gradient(135deg, var(--asphalt) 0%, #20262d 100%);
+  background:
+    linear-gradient(180deg, rgba(20,23,26,0.55) 0%, rgba(20,23,26,0.75) 55%, rgba(20,23,26,0.95) 100%),
+    url('https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
   border-radius: var(--radius);
   padding: 3rem 2rem;
   color: var(--off-white);
@@ -317,8 +327,29 @@ ul[style*="color:red"] li, ul[style*="color: red"] li {
 }
 
 footer.cec-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
   text-align: center;
-  color: var(--muted);
-  font-size: 0.8rem;
-  padding: 2rem 0 1rem;
+  background: var(--asphalt);
+  border-top: 4px solid var(--lime);
+  color: #9aa0a6;
+  font-size: 0.82rem;
+  padding: 1rem;
+  margin: 0;
+}
+footer.cec-footer .cec-footer-brand {
+  display: block;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--lime);
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+footer.cec-footer .cec-footer-brand .bi {
+  margin-right: 0.4rem;
 }
