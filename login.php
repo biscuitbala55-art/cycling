@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
     <nav class="navbar cec-navbar">
         <div class="container cec-shell py-0">
-            <span class="navbar-brand py-2"><i class="bi bi-bicycle"></i>Cit-E Cycling</span>
+            <a href="index.html" class="navbar-brand py-2"><i class="bi bi-bicycle"></i>Cit-E Cycling</a>
         </div>
     </nav>
 
