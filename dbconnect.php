@@ -3,6 +3,6 @@
  $servername = "localhost";
  $username = "root";
  $password = "";
- $database = "Cycling 2"; 
+ $database = "Cycling"; 
 
  ?>
