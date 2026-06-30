@@ -118,6 +118,7 @@ if (count($results) === 0) {
 foreach($results as $row)
 {
     echo "<div class='cec-result-card'>";
+    echo "<span class='km-marker muted me-2'>ID " . htmlspecialchars($row['id']) . "</span>";
     echo "<span class='name'>" . htmlspecialchars($row['firstname']) . " " . htmlspecialchars($row['surname']) . "</span><br>";
     echo "<span class='km-marker mt-2 me-2'>" . htmlspecialchars($row['distance']) . " KM</span>";
     echo "<span class='km-marker mt-2'>" . htmlspecialchars($row['power_output']) . " W</span>";

@@ -52,7 +52,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] != 1) {
                 </a>
             </div>
             <div class="col-12 col-md-6">
-                <a href="logout.php" class="cec-card-link danger-hover">
+                <a href="logout.php" class="cec-card-link danger-hover" onclick="return confirm('Are you sure you want to logout?');">
                     <span class="cec-icon" style="background:var(--danger);color:#fff;"><i class="bi bi-box-arrow-right"></i></span>
                     <span>
                         <span class="cec-card-title">Logout</span>
