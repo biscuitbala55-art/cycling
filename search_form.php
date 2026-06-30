@@ -22,7 +22,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] != 1) {
 <body>
     <nav class="navbar cec-navbar">
         <div class="container cec-shell py-0">
-            <a href="index.html" class="navbar-brand py-2"><i class="bi bi-bicycle"></i>Cit-E Cycling</a>
+            <a href="admin_menu.php" class="navbar-brand py-2"><i class="bi bi-bicycle"></i>Cit-E Cycling</a>
         </div>
     </nav>
 
