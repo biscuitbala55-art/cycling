@@ -293,8 +293,9 @@ table.cec-table tbody tr:hover {
   letter-spacing: 0.02em;
 }
 .cec-club-banner {
-  background: linear-gradient(135deg, var(--steel) 0%, #2c5680 100%);
-  color: #fff;
+  background: var(--asphalt);
+  border-left: 6px solid var(--lime);
+  color: var(--lime);
   font-family: 'Oswald', sans-serif;
   text-transform: uppercase;
   letter-spacing: 0.03em;
