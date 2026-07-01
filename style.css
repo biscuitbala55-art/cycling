@@ -292,6 +292,17 @@ table.cec-table tbody tr:hover {
   text-transform: uppercase;
   letter-spacing: 0.02em;
 }
+.cec-club-banner {
+  background: linear-gradient(135deg, var(--steel) 0%, #2c5680 100%);
+  color: #fff;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-weight: 600;
+  border-radius: var(--radius);
+  padding: 0.9rem 1.25rem;
+  margin-bottom: 1rem;
+}
 .cec-stats-banner {
   background: var(--asphalt);
   color: var(--off-white);
@@ -311,6 +322,7 @@ table.cec-table tbody tr:hover {
   font-weight: 700;
   color: var(--lime);
 }
+
 
 /* ---------- Alerts (kept generic so PHP "echo" output styles too) -- */
 ul[style*="color:red"], ul[style*="color: red"] {

@@ -107,6 +107,13 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 echo "<h2><i class='bi bi-flag-fill text-warning'></i> Club Results</h2>";
 
+if (count($results) > 0) {
+    echo "<div class='cec-club-banner mb-3'>
+            <i class='bi bi-people-fill me-2'></i>" 
+            . htmlspecialchars($results[0]['name']) . 
+          "</div>";
+}
+
 $totalDistance = 0;
 $totalPower = 0;
 $count = 0;
