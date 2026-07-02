@@ -41,10 +41,52 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] != 1) {
 
                 $search = isset($_POST['firstname']) ? trim($_POST['firstname']) : '';
 
-                if ($search === '') {
-                    echo "<p>Please enter a name to search for.</p>";
-                } elseif (strlen($search) > 50) {
+                if (strlen($search) > 50) {
                     echo "<p>Search term is too long.</p>";
+                } elseif ($search === '') {
+
+                    // blank search: show every participant in a full-detail table
+                    $sql = "SELECT id, firstname, surname, club_id, power_output, distance
+                            FROM participant
+                            ORDER BY id";
+
+                    $stmt = $conn->prepare($sql);
+                    $stmt->execute();
+                    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                    echo "<h2><i class='bi bi-person-fill text-warning'></i> All Participants</h2>";
+
+                    if (count($results) === 0) {
+                        echo "<p>No participants found.</p>";
+                    } else {
+                        echo "<div class='cec-table-wrap' style='border-left:4px solid var(--lime-dark);'>";
+                        echo "<div class='table-responsive'>";
+                        echo "<table class='table cec-table mb-0'>";
+                        echo "<tr>";
+                        echo "<th>ID</th>";
+                        echo "<th>Firstname</th>";
+                        echo "<th>Surname</th>";
+                        echo "<th>Club ID</th>";
+                        echo "<th>Power Output</th>";
+                        echo "<th>Distance</th>";
+                        echo "</tr>";
+
+                        foreach ($results as $row) {
+                            echo "<tr>";
+                            echo "<td><span class='km-marker muted'>" . htmlspecialchars($row['id']) . "</span></td>";
+                            echo "<td>" . htmlspecialchars($row['firstname']) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['surname']) . "</td>";
+                            echo "<td><span class='km-marker muted'>" . htmlspecialchars($row['club_id']) . "</span></td>";
+                            echo "<td><span class='km-marker'>" . htmlspecialchars($row['power_output']) . " W</span></td>";
+                            echo "<td><span class='km-marker'>" . htmlspecialchars($row['distance']) . " KM</span></td>";
+                            echo "</tr>";
+                        }
+
+                        echo "</table>";
+                        echo "</div>";
+                        echo "</div>";
+                    }
+
                 } else {
 
 $sql = "SELECT * FROM participant
@@ -81,10 +123,36 @@ foreach($results as $row)
 
                 $club = isset($_POST['club']) ? trim($_POST['club']) : '';
 
-                if ($club === '') {
-                    echo "<p>Please enter a club name to search for.</p>";
-                } elseif (strlen($club) > 100) {
+                if (strlen($club) > 100) {
                     echo "<p>Search term is too long.</p>";
+                } elseif ($club === '') {
+
+                    // blank search: just list every club with its member count
+                    $sql = "
+                        SELECT club.name, COUNT(participant.id) AS member_count
+                        FROM club
+                        LEFT JOIN participant ON participant.club_id = club.id
+                        GROUP BY club.id, club.name
+                        ORDER BY club.name
+                    ";
+
+                    $stmt = $conn->prepare($sql);
+                    $stmt->execute();
+                    $clubList = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                    echo "<h2><i class='bi bi-flag-fill text-warning'></i> All Clubs</h2>";
+
+                    if (count($clubList) === 0) {
+                        echo "<p>No clubs found.</p>";
+                    }
+
+                    foreach ($clubList as $row) {
+                        echo "<div class='cec-result-card d-flex justify-content-between align-items-center'>";
+                        echo "<span class='name'>" . htmlspecialchars($row['name']) . "</span>";
+                        echo "<span class='km-marker'>" . (int)$row['member_count'] . " member" . ($row['member_count'] == 1 ? '' : 's') . "</span>";
+                        echo "</div>";
+                    }
+
                 } else {
 
 $sql = "
@@ -107,53 +175,57 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 echo "<h2><i class='bi bi-flag-fill text-warning'></i> Club Results</h2>";
 
-if (count($results) > 0) {
-    echo "<div class='cec-club-banner mb-3'>
-            <i class='bi bi-people-fill me-2'></i>" 
-            . htmlspecialchars($results[0]['name']) . 
-          "</div>";
-}
-
-$totalDistance = 0;
-$totalPower = 0;
-$count = 0;
-
 if (count($results) === 0) {
     echo "<p>No clubs found.</p>";
 }
 
-foreach($results as $row)
-{
-    echo "<div class='cec-result-card'>";
-    echo "<span class='km-marker muted me-2'>ID " . htmlspecialchars($row['id']) . "</span>";
-    echo "<span class='name'>" . htmlspecialchars($row['firstname']) . " " . htmlspecialchars($row['surname']) . "</span><br>";
-    echo "<span class='km-marker mt-2 me-2'>" . htmlspecialchars($row['distance']) . " KM</span>";
-    echo "<span class='km-marker mt-2'>" . htmlspecialchars($row['power_output']) . " W</span>";
-    echo "</div>";
-
-    $totalDistance += $row['distance'];
-    $totalPower += $row['power_output'];
-    $count++;
+// group participants by club name so each club gets its own banner + stats
+$clubs = [];
+foreach ($results as $row) {
+    $clubs[$row['name']][] = $row;
 }
 
-if($count > 0)
-{
-    echo "<div class='cec-stats-banner'>";
-    echo "<h3 class='h6 mb-3' style='color:var(--lime);'><i class='bi bi-bar-chart-fill'></i> Club Statistics</h3>";
-    echo "<div class='row text-center g-3'>";
+foreach ($clubs as $clubName => $members) {
+    echo "<div class='cec-club-banner mb-3'>
+            <i class='bi bi-people-fill me-2'></i>"
+            . htmlspecialchars($clubName) .
+          "</div>";
 
-    echo "<div class='col-6 col-md-3'><div class='stat-label'>Total Distance</div><div class='stat-value'>" . $totalDistance . " KM</div></div>";
+    $totalDistance = 0;
+    $totalPower = 0;
+    $count = 0;
 
-    echo "<div class='col-6 col-md-3'><div class='stat-label'>Average Distance</div><div class='stat-value'>" .
-        round($totalDistance / $count, 2) . " KM</div></div>";
+    foreach ($members as $row) {
+        echo "<div class='cec-result-card'>";
+        echo "<span class='km-marker muted me-2'>ID " . htmlspecialchars($row['id']) . "</span>";
+        echo "<span class='name'>" . htmlspecialchars($row['firstname']) . " " . htmlspecialchars($row['surname']) . "</span><br>";
+        echo "<span class='km-marker mt-2 me-2'>" . htmlspecialchars($row['distance']) . " KM</span>";
+        echo "<span class='km-marker mt-2'>" . htmlspecialchars($row['power_output']) . " W</span>";
+        echo "</div>";
 
-    echo "<div class='col-6 col-md-3'><div class='stat-label'>Total Power</div><div class='stat-value'>" .
-        $totalPower . " W</div></div>";
+        $totalDistance += $row['distance'];
+        $totalPower += $row['power_output'];
+        $count++;
+    }
 
-    echo "<div class='col-6 col-md-3'><div class='stat-label'>Average Power</div><div class='stat-value'>" .
-        round($totalPower / $count, 2) . " W</div></div>";
+    if ($count > 0) {
+        echo "<div class='cec-stats-banner mb-4'>";
+        echo "<h3 class='h6 mb-3' style='color:var(--lime);'><i class='bi bi-bar-chart-fill'></i> Club Statistics</h3>";
+        echo "<div class='row text-center g-3'>";
 
-    echo "</div></div>";
+        echo "<div class='col-6 col-md-3'><div class='stat-label'>Total Distance</div><div class='stat-value'>" . $totalDistance . " KM</div></div>";
+
+        echo "<div class='col-6 col-md-3'><div class='stat-label'>Average Distance</div><div class='stat-value'>" .
+            round($totalDistance / $count, 2) . " KM</div></div>";
+
+        echo "<div class='col-6 col-md-3'><div class='stat-label'>Total Power</div><div class='stat-value'>" .
+            $totalPower . " W</div></div>";
+
+        echo "<div class='col-6 col-md-3'><div class='stat-label'>Average Power</div><div class='stat-value'>" .
+            round($totalPower / $count, 2) . " W</div></div>";
+
+        echo "</div></div>";
+    }
 }
                 }
             }

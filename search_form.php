@@ -35,7 +35,8 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] != 1) {
             <form action="search_result.php" method="POST">
                 <div class="mb-3">
                     <p class="mb-1">Participant firstname or surname</p>
-                    <input type="text" name="firstname" maxlength="50" required class="form-control" placeholder="Eg: Ken or Lorette">
+                    <input type="text" name="firstname" maxlength="50" class="form-control" placeholder="Eg: Ken or Lorette">
+                    <small class="text-muted d-block mt-1" style="text-transform:none;font-weight:400;">Leave blank to show all participants.</small>
                 </div>
                 <input type="hidden" name="participant" value="1">
                 <button type="submit" class="btn btn-cec">Search</button>
@@ -47,7 +48,8 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] != 1) {
             <form action="search_result.php" method="POST">
                 <div class="mb-3">
                     <p class="mb-1">Club name</p>
-                    <input type="text" name="club" maxlength="100" required class="form-control" placeholder="Eg: Durham Dynamos">
+                    <input type="text" name="club" maxlength="100" class="form-control" placeholder="Eg: Durham Dynamos">
+                    <small class="text-muted d-block mt-1" style="text-transform:none;font-weight:400;">Leave blank to show all clubs.</small>
                 </div>
                 <button type="submit" class="btn btn-cec">Search</button>
             </form>
