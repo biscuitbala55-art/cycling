@@ -25,7 +25,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] != 1) {
 </nav>
 
 <div class="cec-shell" style="max-width:680px;">
-<a href="Search_form.php" class="cec-backlink"><i class="bi bi-arrow-left"></i> Back to Search Menu</a>
+<a href="search_form.php" class="cec-backlink"><i class="bi bi-arrow-left"></i> Back to Search Menu</a>
     <?php
         
             
@@ -162,7 +162,7 @@ if($count > 0)
             }
         catch(PDOException $e)
             {
-                echo "Connection failed: " . $e->getMessage();
+                echo "Sorry, something went wrong with your search. Please try again.";
             }
         ?>
 

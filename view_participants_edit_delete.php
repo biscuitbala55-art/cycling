@@ -65,9 +65,9 @@ foreach($participants as $row)
     echo "<tr>";
 
     echo "<td><span class='km-marker muted'>".$row['id']."</span></td>";
-    echo "<td>".$row['firstname']."</td>";
-    echo "<td>".$row['surname']."</td>";
-    echo "<td>".$row['email']."</td>";
+    echo "<td>".htmlspecialchars($row['firstname'])."</td>";
+    echo "<td>".htmlspecialchars($row['surname'])."</td>";
+    echo "<td>".htmlspecialchars($row['email'])."</td>";
     echo "<td>".$row['power_output']."</td>";
     echo "<td>".$row['distance']."</td>";
     echo '<td>'. $row['club_id'] . '</td>';
