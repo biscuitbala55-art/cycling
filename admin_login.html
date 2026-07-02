@@ -26,14 +26,22 @@
         <p class="text-muted mb-4" style="text-transform:none;font-weight:400;">Enter your username and password to access the admin area.</p>
 
         <div class="cec-form-card">
-            <form action="login.php" method="POST">
+            <form action="login.php" method="POST" id="loginForm" novalidate>
                 <div class="mb-3">
                     <p class="mb-1">Username</p>
-                    <input type="text" name="username" maxlength="10"  class="form-control" placeholder="Eg: admin">
+                    <div class="cec-field-wrap">
+                        <input type="text" name="username" id="username" maxlength="10" class="form-control" placeholder="Eg: admin">
+                        <i class="bi bi-exclamation-circle-fill cec-invalid-icon"></i>
+                    </div>
+                    <div class="cec-error-text" id="username-error">Please enter your username.</div>
                 </div>
                 <div class="mb-3">
                     <p class="mb-1">Password</p>
-                    <input type="password" name="password" maxlength="15"  class="form-control" placeholder="Eg: password">
+                    <div class="cec-field-wrap">
+                        <input type="password" name="password" id="password" maxlength="15" class="form-control" placeholder="Eg: password">
+                        <i class="bi bi-exclamation-circle-fill cec-invalid-icon"></i>
+                    </div>
+                    <div class="cec-error-text" id="password-error">Please enter your password.</div>
                 </div>
 
                 <button type="submit" class="btn btn-cec w-100 mt-2">Log in</button>
@@ -42,5 +50,46 @@
 
         <footer class="cec-footer">Cit-E Cycling Web Portal</footer>
     </div>
+
+    <script>
+    (function () {
+        var form = document.getElementById('loginForm');
+
+        function showError(input, errorEl, isValid) {
+            if (isValid) {
+                input.classList.remove('is-invalid');
+                errorEl.classList.remove('show');
+            } else {
+                input.classList.add('is-invalid');
+                errorEl.classList.add('show');
+            }
+        }
+
+        function validateUsername() {
+            var el = document.getElementById('username');
+            var valid = el.value.trim().length > 0;
+            showError(el, document.getElementById('username-error'), valid);
+            return valid;
+        }
+
+        function validatePassword() {
+            var el = document.getElementById('password');
+            var valid = el.value.length > 0;
+            showError(el, document.getElementById('password-error'), valid);
+            return valid;
+        }
+
+        document.getElementById('username').addEventListener('input', validateUsername);
+        document.getElementById('password').addEventListener('input', validatePassword);
+
+        form.addEventListener('submit', function (e) {
+            var validUser = validateUsername();
+            var validPass = validatePassword();
+            if (!(validUser && validPass)) {
+                e.preventDefault();
+            }
+        });
+    })();
+    </script>
 </body>
 </html>

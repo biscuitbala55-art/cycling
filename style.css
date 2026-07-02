@@ -439,3 +439,39 @@ footer.cec-footer .cec-footer-brand .bi {
 .cec-modal-confirm:hover {
   background: #c24322;
 }
+
+/* ---------- Inline field validation (register / login forms) ---------- */
+.cec-field-wrap {
+  position: relative;
+}
+.cec-field-wrap .form-control.is-invalid {
+  border-color: var(--danger);
+  padding-right: 2.5rem;
+}
+.cec-field-wrap .cec-invalid-icon {
+  display: none;
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--danger);
+  pointer-events: none;
+}
+.cec-field-wrap .form-control.is-invalid ~ .cec-invalid-icon {
+  display: inline-block;
+}
+.cec-error-text {
+  display: none;
+  color: var(--danger);
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: normal;
+  margin-top: 0.35rem;
+}
+.cec-error-text.show {
+  display: block;
+}
+.form-check.is-invalid .form-check-input {
+  border-color: var(--danger);
+}

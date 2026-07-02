@@ -26,31 +26,116 @@
         <p class="text-muted mb-4" style="text-transform:none;font-weight:400;">Tell us a little about you and we'll keep you posted about future events.</p>
 
         <div class="cec-form-card">
-            <form action="register.php" method="POST">
+            <form action="register.php" method="POST" id="registerForm" novalidate>
                 <div class="mb-3">
                     <p class="mb-1">Firstname</p>
-                    <input type="text" name="firstname" pattern="[A-Za-z\-' ]{1,50}" title="Letters, spaces, hyphens or apostrophes only (max 50 characters)"  class="form-control"  placeholder="Eg: Sam">
+                    <div class="cec-field-wrap">
+                        <input type="text" name="firstname" id="firstname" pattern="[A-Za-z\-' ]{1,50}" title="Letters, spaces, hyphens or apostrophes only (max 50 characters)" class="form-control" placeholder="Eg: Sam">
+                        <i class="bi bi-exclamation-circle-fill cec-invalid-icon"></i>
+                    </div>
+                    <div class="cec-error-text" id="firstname-error">Please enter your first name (at least 2 characters).</div>
                 </div>
                 <div class="mb-3">
                     <p class="mb-1">Surname</p>
-                    <input type="text" name="surname" pattern="[A-Za-z\-' ]{1,50}" title="Letters, spaces, hyphens or apostrophes only (max 50 characters)"  class="form-control"  placeholder="Eg: Smith">
+                    <div class="cec-field-wrap">
+                        <input type="text" name="surname" id="surname" pattern="[A-Za-z\-' ]{1,50}" title="Letters, spaces, hyphens or apostrophes only (max 50 characters)" class="form-control" placeholder="Eg: Smith">
+                        <i class="bi bi-exclamation-circle-fill cec-invalid-icon"></i>
+                    </div>
+                    <div class="cec-error-text" id="surname-error">Please enter your surname (at least 2 characters).</div>
                 </div>
                 <div class="mb-3">
                     <p class="mb-1">Email</p>
-                    <input type="email" name="email" maxlength="100"  class="form-control"  placeholder="Eg: sam@example.com">
+                    <div class="cec-field-wrap">
+                        <input type="email" name="email" id="email" maxlength="100" class="form-control" placeholder="Eg: sam@example.com">
+                        <i class="bi bi-exclamation-circle-fill cec-invalid-icon"></i>
+                    </div>
+                    <div class="cec-error-text" id="email-error">Please enter a valid email address.</div>
                 </div>
-                <div class="form-check mb-3">
-                    <input type="checkbox" name="terms" value="yes"  class="form-check-input" id="termsCheck" >
-                    <label class="form-check-label text-normal" for="termsCheck" style="text-transform:none;font-weight:400;color:var(--ink);">
-                        Do you accept the terms and conditions?
-                    </label>
+                <div class="mb-3">
+                    <div class="form-check">
+                        <input type="checkbox" name="terms" value="yes" class="form-check-input" id="termsCheck">
+                        <label class="form-check-label text-normal" for="termsCheck" style="text-transform:none;font-weight:400;color:var(--ink);">
+                            I accept the <a href="#" style="text-decoration:underline;">terms and conditions</a>
+                        </label>
+                    </div>
+                    <div class="cec-error-text" id="terms-error">You must accept the terms and conditions to register.</div>
                 </div>
 
-                <button type="submit" class="btn btn-cec w-100 mt-2">Register</button>
+                <button type="submit" class="btn btn-cec w-100 mt-2">Submit Registration</button>
             </form>
         </div>
 
         <footer class="cec-footer">Cit-E Cycling Web Portal</footer>
     </div>
+
+    <script>
+    (function () {
+        var form = document.getElementById('registerForm');
+        var namePattern = /^[A-Za-z\-' ]{1,50}$/;
+
+        function showError(input, errorEl, isValid) {
+            if (isValid) {
+                input.classList.remove('is-invalid');
+                errorEl.classList.remove('show');
+            } else {
+                input.classList.add('is-invalid');
+                errorEl.classList.add('show');
+            }
+        }
+
+        function validateFirstname() {
+            var el = document.getElementById('firstname');
+            var val = el.value.trim();
+            var valid = val.length >= 2 && namePattern.test(val);
+            showError(el, document.getElementById('firstname-error'), valid);
+            return valid;
+        }
+
+        function validateSurname() {
+            var el = document.getElementById('surname');
+            var val = el.value.trim();
+            var valid = val.length >= 2 && namePattern.test(val);
+            showError(el, document.getElementById('surname-error'), valid);
+            return valid;
+        }
+
+        function validateEmail() {
+            var el = document.getElementById('email');
+            var val = el.value.trim();
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            var valid = emailPattern.test(val) && val.length <= 100;
+            showError(el, document.getElementById('email-error'), valid);
+            return valid;
+        }
+
+        function validateTerms() {
+            var el = document.getElementById('termsCheck');
+            var errorEl = document.getElementById('terms-error');
+            var valid = el.checked;
+            if (valid) {
+                errorEl.classList.remove('show');
+            } else {
+                errorEl.classList.add('show');
+            }
+            return valid;
+        }
+
+        document.getElementById('firstname').addEventListener('input', validateFirstname);
+        document.getElementById('surname').addEventListener('input', validateSurname);
+        document.getElementById('email').addEventListener('input', validateEmail);
+        document.getElementById('termsCheck').addEventListener('change', validateTerms);
+
+        form.addEventListener('submit', function (e) {
+            var validFirst = validateFirstname();
+            var validSurname = validateSurname();
+            var validEmail = validateEmail();
+            var validTerms = validateTerms();
+
+            if (!(validFirst && validSurname && validEmail && validTerms)) {
+                e.preventDefault();
+            }
+        });
+    })();
+    </script>
 </body>
 </html>
