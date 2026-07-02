@@ -80,7 +80,7 @@
 
                     $stmt->execute();
 
-                    echo '<div class="cec-form-card text-center"><i class="bi bi-check-circle-fill text-success fs-1"></i><p class="mt-3 mb-0" style="text-transform:none;font-weight:600;color:var(--ink);">New table record created successfully</p></div>';
+                     echo '<div class="cec-form-card text-center"><i class="bi bi-check-circle-fill text-success fs-1"></i><p class="mt-3 mb-0" style="text-transform:none;font-weight:600;color:var(--ink);">Registration successful</p><p class="mt-2 mb-0" style="text-transform:none;font-weight:400;color:var(--muted);">Thanks, ' . htmlspecialchars($first_name) . ' ' . htmlspecialchars($surname) . '! We\'ll keep you posted about future events.</p></div>';
                 }
                 catch(PDOException $e)
                 {

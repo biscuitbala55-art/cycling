@@ -31,6 +31,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login'] != 1) {
 
     <div class="cec-shell">
         <h1 class="mb-4"><i class="bi bi-speedometer2 text-warning"></i> Admin menu</h1>
+        <p class="text-muted" style="text-transform:none;font-weight:400;">Welcome to the admin menu page. From here, you can search for participants or clubs, view all participants, and manage your admin session.</p>
 
         <div class="row g-3">
             <div class="col-12 col-md-6">

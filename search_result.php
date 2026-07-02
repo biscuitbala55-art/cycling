@@ -166,6 +166,10 @@ if($count > 0)
             }
         ?>
 
+<p class="mt-4">
+    <a href="search_form.php" class="btn btn-cec-outline"><i class="bi bi-arrow-repeat"></i> New search</a>
+</p>
+
 <footer class="cec-footer">Cit-E Cycling Web Portal</footer>
 </div>
 </body>
