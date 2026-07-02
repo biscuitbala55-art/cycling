@@ -366,3 +366,76 @@ footer.cec-footer .cec-footer-brand {
 footer.cec-footer .cec-footer-brand .bi {
   margin-right: 0.4rem;
 }
+
+/* ---------- Confirm modal (styled replacement for browser confirm()) ---------- */
+.cec-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 23, 26, 0.65);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.cec-modal-overlay.active {
+  display: flex;
+}
+.cec-modal-box {
+  background: #fff;
+  border-radius: var(--radius);
+  border-top: 4px solid var(--lime);
+  max-width: 380px;
+  width: 100%;
+  padding: 1.75rem;
+  text-align: center;
+  box-shadow: 0 12px 32px rgba(20,23,26,0.25);
+  animation: cec-modal-in .15s ease;
+}
+@keyframes cec-modal-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.cec-modal-box .cec-modal-icon {
+  font-size: 2.2rem;
+  color: var(--danger);
+  margin-bottom: 0.75rem;
+  display: block;
+}
+.cec-modal-box p {
+  text-transform: none;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+}
+.cec-modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+}
+.cec-modal-actions button {
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+.cec-modal-cancel {
+  background: var(--off-white);
+  border: 2px solid var(--line) !important;
+  color: var(--muted);
+}
+.cec-modal-cancel:hover {
+  background: var(--line);
+}
+.cec-modal-confirm {
+  background: var(--danger);
+  color: #fff;
+}
+.cec-modal-confirm:hover {
+  background: #c24322;
+}

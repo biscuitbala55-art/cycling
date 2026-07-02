@@ -77,7 +77,8 @@ foreach($participants as $row)
     echo "</td>";
 
     echo "<td>";
-    echo "<a href='delete.php?id=".$row['id']."' class='dbutton btn-delete-pill' onclick='return confirm(\"Are you sure you want to delete this person?\");'><i class=\"bi bi-trash-fill\"></i> Delete</a>";
+   $confirmMsg = "Are you sure you want to delete " . htmlspecialchars($row['firstname'], ENT_QUOTES) . " " . htmlspecialchars($row['surname'], ENT_QUOTES) . " (ID " . (int)$row['id'] . ")?";
+   echo "<a href='delete.php?id=".$row['id']."' class='dbutton btn-delete-pill' onclick=\"return cecConfirm(event, this.href, '".$confirmMsg."');\"><i class=\"bi bi-trash-fill\"></i> Delete</a>";
     echo "</td>";
 
     echo "</tr>";
@@ -96,5 +97,41 @@ echo "</div>";
 
     <footer class="cec-footer">Cit-E Cycling Web Portal</footer>
     </div>
+
+    <div class="cec-modal-overlay" id="cecModalOverlay" style="display:none;">
+        <div class="cec-modal-box">
+            <i class="bi bi-exclamation-triangle-fill cec-modal-icon"></i>
+            <p id="cecModalMessage">Are you sure?</p>
+            <div class="cec-modal-actions">
+                <button type="button" class="cec-modal-cancel" onclick="cecModalCancel();">Cancel</button>
+                <button type="button" class="cec-modal-confirm" onclick="cecModalConfirm();">Yes, continue</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    var cecModalTargetUrl = null;
+
+    function cecConfirm(event, url, message) {
+        event.preventDefault();
+        cecModalTargetUrl = url;
+        document.getElementById('cecModalMessage').textContent = message;
+        var overlay = document.getElementById('cecModalOverlay');
+        overlay.style.display = 'flex';
+        return false;
+    }
+
+    function cecModalCancel() {
+        cecModalTargetUrl = null;
+        document.getElementById('cecModalOverlay').style.display = 'none';
+    }
+
+    function cecModalConfirm() {
+        if (cecModalTargetUrl) {
+            window.location.href = cecModalTargetUrl;
+        }
+        document.getElementById('cecModalOverlay').style.display = 'none';
+    }
+    </script>
 </body>
 </html>
